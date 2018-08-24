@@ -12,8 +12,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import net.techgy.idgenerator.dbbase.impl.IdAssignment;
 
@@ -40,7 +38,7 @@ public class BaseIDGenerator implements IIDGenerator {
 	
 	//@Value("#{configProperties['reloadIdStragety']}")
 	//@ZooKeeper("/WIAIR/electric/reloadIdStragety")
-	private boolean reloadIdStragety;
+	private boolean reloadIdStragety=true;
 	
 	private IDAssignmentMapper idMapper;
 	
@@ -129,7 +127,6 @@ public class BaseIDGenerator implements IIDGenerator {
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor=Throwable.class)
 	public Set<String> getStringIds(Class<?> entityCls,String clientId, int idNum, int idLen, String...prefixStrs) {
 		this.doCheck(entityCls);
 		//String entityId = IDUtils.getInstance().getEntityID(entityCls);		
@@ -228,7 +225,6 @@ public class BaseIDGenerator implements IIDGenerator {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor=Throwable.class)
 	public <T extends Number> Set<T> getNumIds(Class<?> entityCls,String clientId,int idNum) {
 		updateIdDatabase();
 		this.doCheck(entityCls);
@@ -337,20 +333,17 @@ public class BaseIDGenerator implements IIDGenerator {
 		}
 	}
 
-	
-	@Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor=Throwable.class)
 	public IIDAssignment createNewPrefixIDAssignment(IIDAssignment pa)
 			throws IDGeneratorException {
 		IdAssignment newPa = new IdAssignment();
 		try {
 			prefixIdLock.tryLock();
-			
-			Integer value = this.idMapper.maxPrefixValue(pa.getClientId(),pa.getEntityId());
+			Long value = this.idMapper.maxPrefixValue(pa.getClientId(),pa.getEntityId());
 			if(value == null || value == 0) {
 				if(pa.getPrefixValue() != -1) {
 					throw new IDGeneratorException("Fail to query max prefix");
 				}
-				value=-1;
+				value=-1l;
 			}
 			if(pa.getPrefixValue() != -1) {
 				pa.setStatu("used");
@@ -452,7 +445,6 @@ public class BaseIDGenerator implements IIDGenerator {
 		return val;
 	}
 	
-	@Transactional(propagation = Propagation.REQUIRED,rollbackFor=Throwable.class)
 	public void resetID() {
 	
 		Set<Class<?>> classes = ClassScannerUtils.getInstance().getClasses(

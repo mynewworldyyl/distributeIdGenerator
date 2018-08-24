@@ -4,20 +4,46 @@ import java.util.Date;
 
 import net.techgy.idgenerator.IIDAssignment;
 
+@Table("t_test_idassignment")
 public class IdAssignment implements IIDAssignment {
 
+	@Column("id")
 	private Integer id;
+	
+	@Column("CLIENT_ID")
 	private String clientId;
+	
+	@Column("ENTITY_ID")
 	private String entityId;
+	
+	@Column("PREFIX_VALUE")
 	private Long prefixValue;
+	
+	@Column("PREFIX_VALUE_LEN")
 	private Integer prefixValueLen;
+	
+	@Column("ID_VALUE_TYPE")
 	private String idValueType;
+	
+	@Column("ID_INIT_VALUE")
 	private Long idInitValue;
+	
+	@Column("ID_VALUE")
 	private Long idValue;
+	
+	@Column("ID_STEP_LEN")
 	private Integer idStepLen;
+	
+	@Column("STATU")
 	private String statu;
+	
+	@Column("TABLE_NAME")
 	private String tableName;
+	
+	@Column("CREATE_DATE")
 	private Date createDate;
+	
+	@Column("UPDATE_DATE")
 	private Date updateDate;
 	
 	public Integer getId() {

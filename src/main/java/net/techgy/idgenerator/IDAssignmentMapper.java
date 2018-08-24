@@ -9,7 +9,7 @@ public interface IDAssignmentMapper {
 
 	Set<IIDAssignment> loadAllUsingAssigment();
 	
-    int maxPrefixValue(String clientId,String entitId);
+    long maxPrefixValue(String clientId,String entitId);
 	
 	boolean isExistPrefix(String clientId,String entitId);
 	
