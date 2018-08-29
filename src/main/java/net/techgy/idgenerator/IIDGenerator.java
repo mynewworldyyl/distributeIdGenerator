@@ -12,7 +12,7 @@ public interface IIDGenerator {
 	 * @param prefixStrs　ID的前缀
 	 * @return
 	 */
-	String getStringId(Class<?> entityCls, String...prefixStrs);
+	//String getStringId(Class<?> entityCls, String...prefixStrs);
     
 	/**
      * 

@@ -84,10 +84,10 @@ public class CacheBaseIDManager implements IIDGenerator{
 	}
 
 
-	@Override
+	/*@Override
 	public String getStringId(Class<?> entityCls, String... prefixStrs) {
 		return this.getStringId(entityCls, null, prefixStrs);
-	}
+	}*/
 
 	@Override
 	public String getStringId(Class<?> entityCls, int idLen, String... prefixStrs) {

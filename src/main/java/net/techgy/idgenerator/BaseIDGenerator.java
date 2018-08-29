@@ -116,10 +116,10 @@ public class BaseIDGenerator implements IIDGenerator {
 		return idkey;
 	}
 	
-	@Override
+	/*@Override
 	public String getStringId(Class<?> entityCls, String... prefixStrs) {
 		return this.getStringId(entityCls, "", prefixStrs);
-	}
+	}*/
 
 	@Override
 	public String getStringId(Class<?> entityCls, int idLen, String... prefixStrs) {
